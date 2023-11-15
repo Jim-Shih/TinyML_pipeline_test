@@ -1,0 +1,37 @@
+version: '3'
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - 8080:8080
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    restart: always
+
+  postgresql:
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database
+    restart: always
+
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+    restart: always
+
+  spark:
+    image: apache/spark:latest
+    ports:
+      - 8081:8080
+    restart: always
+
+volumes:
+  jenkins_home:
+  grafana_data:
